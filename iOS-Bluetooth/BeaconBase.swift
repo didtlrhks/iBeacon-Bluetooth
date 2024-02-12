@@ -17,7 +17,11 @@ class BeaconBase: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
+        self.locationManager?.allowsBackgroundLocationUpdates = true
+        self.locationManager?.startUpdatingLocation()
     }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways || status == .authorizedWhenInUse {
