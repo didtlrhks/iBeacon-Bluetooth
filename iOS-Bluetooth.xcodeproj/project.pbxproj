@@ -17,6 +17,7 @@
 		8EFA88B12B77F1A6006E003E /* IBeaconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA88B02B77F1A6006E003E /* IBeaconView.swift */; };
 		8EFA88B32B77F1D1006E003E /* BeaconBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA88B22B77F1D1006E003E /* BeaconBase.swift */; };
 		8EFA88B52B77F203006E003E /* BeaconDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA88B42B77F203006E003E /* BeaconDebugger.swift */; };
+		8EFA88EA2B79FE7A006E003E /* ServerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA88E92B79FE7A006E003E /* ServerCommunicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		8EFA88B02B77F1A6006E003E /* IBeaconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBeaconView.swift; sourceTree = "<group>"; };
 		8EFA88B22B77F1D1006E003E /* BeaconBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconBase.swift; sourceTree = "<group>"; };
 		8EFA88B42B77F203006E003E /* BeaconDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconDebugger.swift; sourceTree = "<group>"; };
+		8EFA88E92B79FE7A006E003E /* ServerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCommunicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				8EFA88B02B77F1A6006E003E /* IBeaconView.swift */,
 				8EFA88B22B77F1D1006E003E /* BeaconBase.swift */,
 				8EFA88B42B77F203006E003E /* BeaconDebugger.swift */,
+				8EFA88E92B79FE7A006E003E /* ServerCommunicator.swift */,
 				8EFA88812B77CE83006E003E /* Assets.xcassets */,
 				8EFA88832B77CE83006E003E /* Preview Content */,
 			);
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EFA88802B77CE80006E003E /* ContentView.swift in Sources */,
+				8EFA88EA2B79FE7A006E003E /* ServerCommunicator.swift in Sources */,
 				8EFA887E2B77CE80006E003E /* iOS_BluetoothApp.swift in Sources */,
 				8EFA88B32B77F1D1006E003E /* BeaconBase.swift in Sources */,
 				8EFA88B12B77F1A6006E003E /* IBeaconView.swift in Sources */,
