@@ -23,13 +23,13 @@ class BeaconDebugger: BeaconBase {
     }
     
     func updateDistance(_ beacons: [CLBeacon]) {
-        // 가장 가까운 비콘을 선택합니다. 예제에서는 첫 번째 비콘을 사용합니다.
+        
         guard let closestBeacon = beacons.first else { return }
         currentBeacon = closestBeacon
         
         // 근접성에 따라 서버로 데이터를 전송합니다.
         if closestBeacon.proximity == .near || closestBeacon.proximity == .immediate {
-            ServerCommunicator.sendBeaconDataToServer() //sendBeaconDataToServer(beacon: closestBeacon)
+            ServerCommunicator.sendBeaconDataToServer(beacon: closestBeacon) //sendBeaconDataToServer(beacon: closestBeacon)
         }
         
         // 모든 비콘에 대해 정보를 저장합니다.

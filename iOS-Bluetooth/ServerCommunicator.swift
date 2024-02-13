@@ -6,20 +6,22 @@
 //
 
 import Foundation
+import SwiftUI
+import CoreLocation
 
 class ServerCommunicator {
    
-   static func sendBeaconDataToServer() {
+   static func sendBeaconDataToServer(beacon: CLBeacon) {
             guard let url = URL(string: "https://workapi.neo-works.co.kr/api/Job/SmsTestRequest") else { return }
             
             // 요청 바디를 구성
-            let requestBody = [
-                "발송문구": "비콘 근접함",
-                "발송번호": "027621162",
-                "수신번호": "01087674752",
-                "업체코드": "075",
-                "mmS여부": "1"
-            ]
+       let requestBody = [
+                  "발송문구": "비콘 근접함 - Major: \(beacon.major), Minor: \(beacon.minor)",
+                  "발송번호": "027621162",
+                  "수신번호": "01087674752",
+                  "업체코드": "075",
+                  "mmS여부": "1"
+              ]
             
             // 요청을 구성
             var request = URLRequest(url: url)

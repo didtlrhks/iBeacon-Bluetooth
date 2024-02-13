@@ -24,12 +24,18 @@ struct IbeaconView: View {
             Text("minor : 64001")
             
             Button("Send Data to Server") {
-                ServerCommunicator.sendBeaconDataToServer()
-                       }
-                       .padding()
-                       .background(Color.blue)
-                       .foregroundColor(.white)
-                       .cornerRadius(5)
+                if let beacon = beaconDetector.currentBeacon {
+                    // 현재 감지된 비콘 정보를 서버로 전송
+                    ServerCommunicator.sendBeaconDataToServer(beacon: beacon)
+                } else {
+                    // 현재 감지된 비콘 없음: 대체 동작 또는 오류 처리
+                    print("No beacon detected to send.")
+                }
+            }
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(5)
         }
         .onAppear(perform: startScanning)
         .onDisappear(perform: stopScanning)

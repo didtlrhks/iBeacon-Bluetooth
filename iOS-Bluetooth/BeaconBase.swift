@@ -23,6 +23,7 @@ class BeaconBase: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     
     
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways || status == .authorizedWhenInUse {
             guard CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) else {return BeaconBase.beaconsWereNotGivenPermission()}
@@ -33,7 +34,14 @@ class BeaconBase: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+        for beacon in beacons {
+            if beacon.proximity == .unknown || beacon.proximity == .near || beacon.proximity == .immediate {
+                ServerCommunicator.sendBeaconDataToServer(beacon: beacon)
+            }
+        }
     }
+
+        
     
     private static func beaconsWereNotGivenPermission(){
        
@@ -44,15 +52,15 @@ class BeaconBase: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("translate proximity")
          switch distance {
          case .unknown:
-             return "Unknown"
+             return "잘몰르겠어"
          case .far:
              return "멀다"
          case .near:
              return "가깝다"
          case .immediate:
-             return "Immediate"
+             return "바로옆!"
          default:
-             return "Default"
+             return "그냥"
          }
      }
  
