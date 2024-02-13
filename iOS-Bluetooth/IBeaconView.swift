@@ -8,6 +8,7 @@
 import Foundation
 
 import SwiftUI
+import CoreLocation
 
 struct IbeaconView: View {
     let beaconUUID = UUID(uuidString: "ABCDEF12-1234-5678-8765-432190031125")!
@@ -33,6 +34,8 @@ struct IbeaconView: View {
                        .cornerRadius(5)
         }
         .onAppear(perform: startScanning)
+       
+        
         .onDisappear(perform: stopScanning)
     }
     
@@ -63,9 +66,12 @@ struct IbeaconView: View {
 
 
 
+
+
  
 struct IbeaconView_Previews: PreviewProvider {
     static var previews: some View {
         IbeaconView()
     }
 }
+
