@@ -23,25 +23,22 @@ class BeaconDebugger: BeaconBase {
     }
     
     func updateDistance(_ beacons: [CLBeacon]) {
-        
-        guard let closestBeacon = beacons.first else { return }
-        currentBeacon = closestBeacon
-        
-        // 근접성에 따라 서버로 데이터를 전송합니다.
-        if closestBeacon.proximity == .near || closestBeacon.proximity == .immediate {
-            ServerCommunicator.sendBeaconDataToServer(beacon: closestBeacon) //sendBeaconDataToServer(beacon: closestBeacon)
-        }
-        
-        // 모든 비콘에 대해 정보를 저장합니다.
         for beacon in beacons {
-            let key = "\(beacon.major)-\(beacon.minor)"
-            if beaconInfo[key] == nil {
-                beaconInfo[key] = []
+            let beaconKey = "\(beacon.proximityUUID.uuidString)-\(beacon.major)-\(beacon.minor)"
+            
+           
+            if beacon.proximity == .near && messageSentForBeacons[beaconKey] != true {
+                ServerCommunicator.sendBeaconDataToServer(beacon: beacon)
+                messageSentForBeacons[beaconKey] = true
             }
-            beaconInfo[key]?.append(BeaconHistoryItem(beacon: beacon))
+            
+           
+            if beaconInfo[beaconKey] == nil {
+                beaconInfo[beaconKey] = []
+            }
+            beaconInfo[beaconKey]?.append(BeaconHistoryItem(beacon: beacon))
         }
     }
-     
 
 
     func startScanning(beaconUUID: UUID, major: CLBeaconMajorValue? = nil, minor: CLBeaconMinorValue? = nil) {
