@@ -34,17 +34,17 @@ class BeaconBase: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-        for beacon in beacons {
-            let beaconKey = "\(beacon.proximityUUID.uuidString)-\(beacon.major)-\(beacon.minor)"
+         for beacon in beacons {
+             let beaconKey = "\(beacon.proximityUUID.uuidString)-\(beacon.major)-\(beacon.minor)"
 
-           
-            if messageSentForBeacons[beaconKey] != true {
-                ServerCommunicator.sendBeaconDataToServer(beacon: beacon)
-               
-                messageSentForBeacons[beaconKey] = true
-            }
-        }
-    }
+            
+             if messageSentForBeacons[beaconKey] != true {
+                 ServerCommunicator.sendBeaconDataToServer(beacon: beacon)
+                
+                 messageSentForBeacons[beaconKey] = true
+             }
+         }
+     }
 
     private static func beaconsWereNotGivenPermission() {
         print("Beacons not given permission!")
