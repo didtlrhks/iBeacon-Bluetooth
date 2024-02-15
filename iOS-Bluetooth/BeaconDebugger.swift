@@ -12,15 +12,56 @@ import CoreLocation
 import SwiftUI
 
 
+import Foundation
+
+import Foundation
+import CoreLocation
+import SwiftUI
+
+
 class BeaconDebugger: BeaconBase {
     @Published var currentBeacon: CLBeacon? = nil
     @Published var beaconInfo: [String: [BeaconHistoryItem]] = [:]
     
+    // 비콘의 마지막 감지 시간을 추적하는 딕셔너리
+    var lastSeenBeacons: [String: Date] = [:]
+
+    // 비콘 연결 끊김을 확인하는 타이머를 관리하는 딕셔너리
+    var disconnectTimers: [String: Timer] = [:]
+
+    
+//    override func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+//        if beacons.count > 0 {
+//            updateDistance(beacons)
+//        }
+//    }
     override func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-        if beacons.count > 0 {
-            updateDistance(beacons)
+        
+                if beacons.count > 0 {
+                    updateDistance(beacons)
+                }
+        
+        for beacon in beacons {
+            let beaconKey = "\(beacon.proximityUUID.uuidString)-\(beacon.major)-\(beacon.minor)"
+            lastSeenBeacons[beaconKey] = Date() // 비콘을 감지한 시간 업데이트
+
+            // 기존에 설정된 타이머가 있다면 취소
+            disconnectTimers[beaconKey]?.invalidate()
+            disconnectTimers[beaconKey] = nil
+
+            // 새 타이머 설정
+            disconnectTimers[beaconKey] = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
+                self?.notifyServerAboutBeaconDisconnect(beaconKey: beaconKey)
+                self?.disconnectTimers[beaconKey] = nil
+            }
         }
     }
+    func notifyServerAboutBeaconDisconnect(beaconKey: String) {
+        // 여기에 비콘 연결 끊김 상태를 서버에 알리는 코드를 추가
+        print("\(beaconKey) 연결 끊김")
+        ServerCommunicator.sendBeaconDataToServer() // 메시지 내용을 적절히 조정해야 함
+    }
+    
     
     func updateDistance(_ beacons: [CLBeacon]) {
         
@@ -48,6 +89,7 @@ class BeaconDebugger: BeaconBase {
             }
         }
     }
+   
         
 
         
@@ -72,4 +114,3 @@ class BeaconDebugger: BeaconBase {
             var beacon: CLBeacon
         }
     }
-

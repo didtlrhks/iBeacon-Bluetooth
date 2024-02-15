@@ -45,6 +45,7 @@ class BeaconBase: NSObject, ObservableObject, CLLocationManagerDelegate {
              }
          }
      }
+    
 
     private static func beaconsWereNotGivenPermission() {
         print("Beacons not given permission!")
