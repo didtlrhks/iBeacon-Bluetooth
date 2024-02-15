@@ -26,15 +26,15 @@ class ServerCommunicator {
        ]
        } else {
            requestBody = [
-           "발송문구": "비콘 근접함 ",
+           "발송문구": "비콘의 연결이 끊어졌습니다. ",
            "발송번호": "027621162",
            "수신번호": "01087674752",
            "업체코드": "075",
            "mmS여부": "1"
-           ]
+           ] // 연결이 끊겼을때 메세지를 보내는 로직추가함
        }
             
-            // 요청을 구성
+            // joson 요청 코드
        var request = URLRequest(url: url)
               request.httpMethod = "POST"
               request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -46,7 +46,7 @@ class ServerCommunicator {
                   return
               }
             
-            // URLSession을 사용하여 요청 전송
+            // URLSession을 사용하여 요청 전송하기
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
                     print("Request error: ", error)
@@ -58,7 +58,7 @@ class ServerCommunicator {
                     return
                 }
                 
-                // 결과 처리
+                // 결과 로직 확인하기위한소스
                 do {
                     if let jsonResult = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         print("Response JSON: ", jsonResult)

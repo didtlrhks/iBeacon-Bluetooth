@@ -43,9 +43,9 @@ class BeaconDebugger: BeaconBase {
         
         for beacon in beacons {
             let beaconKey = "\(beacon.proximityUUID.uuidString)-\(beacon.major)-\(beacon.minor)"
-            lastSeenBeacons[beaconKey] = Date() // 비콘을 감지한 시간 업데이트
+            lastSeenBeacons[beaconKey] = Date()
 
-            // 기존에 설정된 타이머가 있다면 취소
+           
             disconnectTimers[beaconKey]?.invalidate()
             disconnectTimers[beaconKey] = nil
 
