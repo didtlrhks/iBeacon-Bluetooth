@@ -72,6 +72,14 @@ class BeaconDebugger: BeaconBase {
         for beacon in beacons {
             let beaconKey = "\(beacon.proximityUUID.uuidString)-\(beacon.major)-\(beacon.minor)"
             
+            
+            if let timer = disconnectTimers[beaconKey] {
+                       timer.invalidate()
+                       disconnectTimers[beaconKey] = nil
+                       // 비콘 연결됨 상태를 서버에 알림 (새로운 메서드 필요)
+                       notifyServerAboutBeaconConnect(beaconKey: beaconKey)
+                   }
+            
             // 근접성에 따라 서버로 데이터를 전송하고 다시는 보내지 않는 로직
             if beacon.proximity == .near && messageSentForBeacons[beaconKey] != true {
                 ServerCommunicator.sendBeaconDataToServer(beacon: beacon)
@@ -90,7 +98,11 @@ class BeaconDebugger: BeaconBase {
         }
     }
    
-        
+    func notifyServerAboutBeaconConnect(beaconKey: String) {
+        print("\(beaconKey) 연결됨")
+        // 서버로 "연결됨" 상태를 전송하는 코드 구현
+        // ServerCommunicator.sendBeaconDataToServer(beacon: beacon) 형태로 조정할 수 있음
+    }
 
         
         func startScanning(beaconUUID: UUID, major: CLBeaconMajorValue? = nil, minor: CLBeaconMinorValue? = nil) {
